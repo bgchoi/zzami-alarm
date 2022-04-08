@@ -1,0 +1,13 @@
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    implementation project(':zzami-alarm-core')
+
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+}
