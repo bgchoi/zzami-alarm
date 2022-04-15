@@ -1,9 +1,13 @@
 package com.zzami.alarm.api.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zzami.alarm.api.dto.NewsInfoDTO;
@@ -24,7 +28,14 @@ public class NewsController {
     @Autowired
     NewsService newsService;
 
-    @ApiOperation(value = "뉴스 소스 등록") 
+    /**
+     * 
+     * @author : bong 
+     * @date : 2022.04.16 
+     * @description : 뉴스 소스 등록  
+     *
+     */
+    @ApiOperation(value = "뉴스 소스 등록[어드민]") 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "newsSourceId", required = false,  paramType = "form", value = "뉴스아이디"),
         @ApiImplicitParam(name = "newsSourceNm", required = true,  paramType = "form", value = "뉴스이름"),
@@ -48,13 +59,20 @@ public class NewsController {
         return ResponseEntity.ok().body(responseBody); 
     }
     
-    @ApiOperation(value = "뉴스 등록") 
+    /**
+     * 
+     * @author : bong 
+     * @date : 2022.04.16 
+     * @description : 단일 뉴스 등록  
+     *
+     */
+    @ApiOperation(value = "뉴스 등록[FORM]") 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "newsId", required = false,  paramType = "form", value = "뉴스아이디"), 
         @ApiImplicitParam(name = "newsSourceId", required = true,  paramType = "form", value = "뉴스소스아이디"), 
     })
-    @PostMapping(value="/news", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE} )
-    public ResponseEntity<ApiResponseBody<Void>> saveNewsReport(
+    @PostMapping(value="/news_form", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE} )
+    public ResponseEntity<ApiResponseBody<Void>> saveNewsReportForm(
              NewsInfoDTO newsReportDto) {
 
         ApiResponseBody<Void> responseBody = new ApiResponseBody<>();
@@ -70,6 +88,53 @@ public class NewsController {
         return ResponseEntity.ok().body(responseBody); 
     }
     
+    /**
+     * 
+     * @author : bong 
+     * @date : 2022.04.16 
+     * @description : 뉴스등록 외부에서의 뉴스 목록등록 
+     *
+     */
+    @ApiOperation(value = "뉴스 등록[JSON]")  
+    @PostMapping(value="/news_json" )
+    public ResponseEntity<ApiResponseBody<Void>> saveNewsReportJson(
+             @RequestBody List<NewsInfoDTO> newsList) {
+
+        ApiResponseBody<Void> responseBody = new ApiResponseBody<>();
+        responseBody.setResponse(ResultStatus.OK);
+        
+        try {
+            newsService.save(newsList);
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return ResponseEntity.ok().body(responseBody); 
+    }
+    
+    /**
+     * 
+     * @author : bong 
+     * @date : 2022.04.16 
+     * @description : 뉴스 상세 조회 
+     *
+     */
+    @ApiOperation(value = "뉴스 조회")  
+    @GetMapping(value="/news/{newsId}" )
+    public ResponseEntity<ApiResponseBody<NewsInfoDTO>> getNews(
+             @PathVariable Long newsId ) {
+
+        ApiResponseBody<NewsInfoDTO> responseBody = new ApiResponseBody<>();
+        responseBody.setResponse(ResultStatus.OK);
+        
+        try {
+            responseBody.setResult(newsService.getNewsById(newsId));
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return ResponseEntity.ok().body(responseBody); 
+    }
     
     
 

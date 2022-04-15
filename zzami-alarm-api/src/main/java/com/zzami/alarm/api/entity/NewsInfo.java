@@ -46,7 +46,8 @@ public class NewsInfo {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDt;
     
-    @Column(name="pub_dt")
+    @Column(name="pub_dt", columnDefinition = "TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date pubDt;
+    
 }

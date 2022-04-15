@@ -2,6 +2,7 @@ package com.zzami.alarm.api.dto;
 
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +39,7 @@ public class NewsInfoDTO {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     protected Date pubDt;
     
+    @JsonIgnore
     @ApiModelProperty(value="등록일(yyyy-MM-dd HH:mm:ss)", required = true)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     protected Date createDt; 

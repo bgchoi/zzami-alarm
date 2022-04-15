@@ -1,5 +1,6 @@
 package com.zzami.alarm.api.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,8 @@ public class ReportController {
     @ApiOperation(value = "알림상세 홈")
     @GetMapping("/report")
     public ResponseEntity<ApiResponseBody<ReportDTO>> getReport(
-            @RequestParam(value = "addCd", defaultValue = "1000000000") String addCd) {
+            @RequestParam(value = "addCd", defaultValue = "1000000000") String addCd,
+            @RequestParam(value = "metaCodeList", defaultValue = "N01520,N01530") String metaCodeStr) {
 
         ApiResponseBody<ReportDTO> responseBody = new ApiResponseBody<>();
         ReportDTO report = new ReportDTO();
@@ -61,7 +63,9 @@ public class ReportController {
             // 미세먼지 조회 
             DustInfoDTO dust = dustService.getCurrentDustInfo(addCd);
             
-            List<NewsMetaTagDTO> newsList = newsService.getCurrentNewsReporMeta(null);
+            List<String> metaCodeList = Arrays.asList(metaCodeStr.split(","));
+            // 뉴스 목록 조회 
+            List<NewsMetaTagDTO> newsList = newsService.getCurrentNewsInfoMeta(metaCodeList);
             
             // 데이터 세팅
             report.setAddress(address);

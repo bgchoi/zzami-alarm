@@ -26,7 +26,7 @@ public class NewsInfoRepositoryImpl extends BaseRepositoryImpl<NewsInfo, Long>
     }
 
     @Override
-    public List<NewsMetaTagDTO> getCurrentNewsReporMeta(List<String> metaCodeList) {
+    public List<NewsMetaTagDTO> getCurrentNewsInfoMeta(List<String> metaCodeList) {
           
         
 //      Map<Long, NewsMetaTagDTO> map = jpaQueryFactory 

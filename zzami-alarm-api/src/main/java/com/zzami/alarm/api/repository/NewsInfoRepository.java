@@ -6,5 +6,5 @@ import com.zzami.alarm.api.entity.NewsInfo;
 
 public interface NewsInfoRepository extends BaseRepository<NewsInfo, Long> {
 
-    public List<NewsMetaTagDTO> getCurrentNewsReporMeta(List<String> metaCodeList) ;
+    public List<NewsMetaTagDTO> getCurrentNewsInfoMeta(List<String> metaCodeList) ;
 }

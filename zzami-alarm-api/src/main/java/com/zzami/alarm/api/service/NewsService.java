@@ -14,8 +14,10 @@ import com.zzami.alarm.api.entity.NewsInfo;
 import com.zzami.alarm.api.entity.NewsSourceInfo;
 import com.zzami.alarm.api.repository.impl.NewsInfoRepositoryImpl;
 import com.zzami.alarm.api.repository.impl.NewsSourceInfoRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @Service
 @Transactional
 public class NewsService {
@@ -32,13 +34,13 @@ public class NewsService {
   /**
    * @author : bong 
    * @date : 2022.04.03 
-   * @description : 뉴스 소스 등록 
+   * @description : 뉴스 소스 db 등록 
    */
   public void save(NewsSourceDTO dto) {
       
-      NewsSourceInfo en = modelMapper.map(dto, NewsSourceInfo.class);
-      en.setCreateDt(new Date());
-      newsSourceRepo.save(en);
+      NewsSourceInfo entity = modelMapper.map(dto, NewsSourceInfo.class);
+      entity.setCreateDt(new Date());
+      newsSourceRepo.save(entity);
   }
   
   /** 
@@ -60,10 +62,45 @@ public class NewsService {
        
   }
   
+  /**
+   * @author : bong 
+   * @date : 2022.04.15 
+   * @description : 뉴스목록 저장 
+   */
+  public void save(List<NewsInfoDTO> list) {
+      
+      for(NewsInfoDTO item: list) {
+          try {
+              save(item);
+          }catch(Exception ex) {
+              log.error(ex.getMessage(), ex);
+          }
+      } 
+       
+  }
+  
+  /**
+   * 
+   * @author : bong 
+   * @date : 2022.04.16 
+   * @description : 뉴스 상세 조회  
+   *
+   */
+  public NewsInfoDTO getNewsById(Long newsId) {
+      
+      NewsInfo news = newsInfoRepo.getById(newsId);
+      NewsInfoDTO newsInfo = null;
+      if(news != null) {
+         newsInfo  = modelMapper.map(news, NewsInfoDTO.class);          
+      }
+      
+      return newsInfo;
+  }
   
   
-  public List<NewsMetaTagDTO> getCurrentNewsReporMeta(List<String> mataCodeList) {
-      return newsInfoRepo.getCurrentNewsReporMeta(Arrays.asList("N01520","N01530"));
+  
+  public List<NewsMetaTagDTO> getCurrentNewsInfoMeta(List<String> mataCodeList) {
+      return newsInfoRepo.getCurrentNewsInfoMeta(Arrays.asList("N01520","N01530"));
       
   }
   

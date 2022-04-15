@@ -13,7 +13,9 @@ import com.zzami.alarm.api.entity.AddressInfo;
 import com.zzami.alarm.api.entity.WeatherInfo;
 import com.zzami.alarm.api.repository.impl.AddressInfoRepositoryImpl;
 import com.zzami.alarm.api.repository.impl.WeatherInfoRepositoryImpl;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class WeatherService {
 
@@ -65,12 +67,13 @@ public class WeatherService {
    */
   @Transactional
   public WeatherInfoDTO getWeatherById(Long weatherId) {
-    Optional<WeatherInfo> alarmWeather =  weatherInfoRepo.findById(weatherId);
-    if(!alarmWeather.isPresent()) {
+    Optional<WeatherInfo> result =  weatherInfoRepo.findById(weatherId);
+    
+    if(!result.isPresent()) {
         return null;
     }
     
-    return modelMapper.map(alarmWeather, WeatherInfoDTO.class);
+    return modelMapper.map(result.get(), WeatherInfoDTO.class);
     
     
   }
@@ -95,6 +98,13 @@ public class WeatherService {
       return weatherInfoRepo.getCurrentWeatherInfo(addCd);
   }
   
+  /**
+   * 
+   * @author : bong 
+   * @date : 2022.04.16 
+   * @description : 뉴스목록 조회 
+   *
+   */
   public List<WeatherInfoDTO> getWeatherInfoList(String addCd){
       return weatherInfoRepo.getWeatherInfoList(addCd);
   }
