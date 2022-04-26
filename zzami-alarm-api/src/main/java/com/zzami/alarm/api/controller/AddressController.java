@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.zzami.alarm.api.dto.AddressInfoDTO;
 import com.zzami.alarm.api.service.AddressService;
+import com.zzami.alarm.api.service.AuthUserDetailService;
 import com.zzami.alarm.core.dto.result.ApiResponseBody;
 import com.zzami.alarm.core.dto.result.ResultStatus;
 import io.swagger.annotations.Api;
@@ -25,6 +26,9 @@ public class AddressController {
 
     @Autowired
     AddressService addressService;
+    
+    @Autowired
+    AuthUserDetailService authService;
 
     @ApiOperation(value = "주소 조회")
     @GetMapping("/address/{addCd}")
@@ -33,6 +37,7 @@ public class AddressController {
 
         ApiResponseBody<AddressInfoDTO> responseBody = new ApiResponseBody<>();
         responseBody.setResponse(ResultStatus.OK);
+        
         
         try { 
             AddressInfoDTO weather = addressService.findAddressInfoByAddcd(addCd);

@@ -12,8 +12,8 @@ import com.zzami.alarm.api.dto.NewsMetaTagDTO;
 import com.zzami.alarm.api.dto.NewsSourceDTO;
 import com.zzami.alarm.api.entity.NewsInfo;
 import com.zzami.alarm.api.entity.NewsSourceInfo;
-import com.zzami.alarm.api.repository.impl.NewsInfoRepositoryImpl;
-import com.zzami.alarm.api.repository.impl.NewsSourceInfoRepositoryImpl;
+import com.zzami.alarm.api.repository.NewsInfoRepository;
+import com.zzami.alarm.api.repository.NewsSourceInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -23,10 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 public class NewsService {
 
   @Autowired
-  NewsSourceInfoRepositoryImpl newsSourceRepo;
+  NewsSourceInfoRepository newsSourceInfoRepository;
   
   @Autowired
-  NewsInfoRepositoryImpl newsInfoRepo;
+  NewsInfoRepository newsInfoRepository;
   
   @Autowired
   ModelMapper modelMapper;
@@ -40,7 +40,7 @@ public class NewsService {
       
       NewsSourceInfo entity = modelMapper.map(dto, NewsSourceInfo.class);
       entity.setCreateDt(new Date());
-      newsSourceRepo.save(entity);
+      newsSourceInfoRepository.save(entity);
   }
   
   /** 
@@ -49,7 +49,7 @@ public class NewsService {
    * @description : 뉴스 리포트 등록 
    */
   public void save(NewsInfoDTO dto) {
-      NewsSourceInfo newsSourceInfo = newsSourceRepo.getById(dto.getNewsSourceId());      
+      NewsSourceInfo newsSourceInfo = newsSourceInfoRepository.getById(dto.getNewsSourceId());      
       if(newsSourceInfo == null) {
           throw new RuntimeException("뉴스소스 정보를 찾을 수 없습니다.");
       }
@@ -58,7 +58,7 @@ public class NewsService {
       newsReport.setNewsSourceInfo(newsSourceInfo);
       newsReport.setIsUse(1);
       
-      newsInfoRepo.save(newsReport);
+      newsInfoRepository.save(newsReport);
        
   }
   
@@ -88,7 +88,7 @@ public class NewsService {
    */
   public NewsInfoDTO getNewsById(Long newsId) {
       
-      NewsInfo news = newsInfoRepo.getById(newsId);
+      NewsInfo news = newsInfoRepository.getById(newsId);
       NewsInfoDTO newsInfo = null;
       if(news != null) {
          newsInfo  = modelMapper.map(news, NewsInfoDTO.class);          
@@ -100,7 +100,7 @@ public class NewsService {
   
   
   public List<NewsMetaTagDTO> getCurrentNewsInfoMeta(List<String> mataCodeList) {
-      return newsInfoRepo.getCurrentNewsInfoMeta(Arrays.asList("N01520","N01530"));
+      return newsInfoRepository.getCurrentNewsInfoMeta(Arrays.asList("N01520","N01530"));
       
   }
   

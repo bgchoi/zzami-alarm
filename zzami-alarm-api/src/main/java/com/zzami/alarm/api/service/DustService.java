@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.DustInfoDTO;
 import com.zzami.alarm.api.entity.AddressInfo;
 import com.zzami.alarm.api.entity.DustInfo;
-import com.zzami.alarm.api.repository.impl.AddressInfoRepositoryImpl;
-import com.zzami.alarm.api.repository.impl.DustInfoRepositoryImpl;
+import com.zzami.alarm.api.repository.AddressInfoRepository;
+import com.zzami.alarm.api.repository.DustInfoRepository;
 
 @Transactional
 @Service
 public class DustService {
 
   @Autowired
-  private DustInfoRepositoryImpl dustInfoRepo;
+  private DustInfoRepository dustInfoRepository;
   
   @Autowired
-  private AddressInfoRepositoryImpl addressInfoRepo;
+  private AddressInfoRepository addressInfoRepository;
   
   @Autowired
   ModelMapper modelMapper;
@@ -31,12 +31,12 @@ public class DustService {
    */ 
   public void insertDustInfo( DustInfoDTO dto) {
       
-      Optional<AddressInfo> addressInfo = addressInfoRepo.findAddressInfoByAddcd(dto.getAddCd());
+      Optional<AddressInfo> addressInfo = addressInfoRepository.findAddressInfoByAddcd(dto.getAddCd());
       if(addressInfo.isPresent()) {
           DustInfo dustInfo = modelMapper.map(dto, DustInfo.class);
           dustInfo.setAddressInfo(addressInfo.get());
           dustInfo.setCreateDt(new Date());
-          dustInfoRepo.save(dustInfo);          
+          dustInfoRepository.save(dustInfo);          
       }
       
   }
@@ -48,7 +48,7 @@ public class DustService {
    *
    */
   public DustInfoDTO getCurrentDustInfo( String addCd) {
-      return dustInfoRepo.getCurrentDustInfo(addCd);
+      return dustInfoRepository.getCurrentDustInfo(addCd);
   }
   
   
@@ -59,7 +59,7 @@ public class DustService {
    */
   @Transactional
   public DustInfo getFindAirById(Long airId) {
-    return dustInfoRepo.findById(airId).orElse(null);
+    return dustInfoRepository.findById(airId).orElse(null);
   }
   
   /**
@@ -68,6 +68,6 @@ public class DustService {
    */
   @Transactional
   public void deleteAirById(Long airId) {
-      dustInfoRepo.deleteById(airId);
+      dustInfoRepository.deleteById(airId);
   }
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.WeatherInfoDTO;
 import com.zzami.alarm.api.entity.AddressInfo;
 import com.zzami.alarm.api.entity.WeatherInfo;
-import com.zzami.alarm.api.repository.impl.AddressInfoRepositoryImpl;
-import com.zzami.alarm.api.repository.impl.WeatherInfoRepositoryImpl;
+import com.zzami.alarm.api.repository.AddressInfoRepository;
+import com.zzami.alarm.api.repository.WeatherInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,10 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 public class WeatherService {
 
   @Autowired
-  private WeatherInfoRepositoryImpl weatherInfoRepo;
+  private WeatherInfoRepository weatherInfoRepository;
   
   @Autowired
-  private AddressInfoRepositoryImpl addressInfoRepo;
+  private AddressInfoRepository addressInfoRepository;
   
   @Autowired
   ModelMapper modelMapper;
@@ -35,12 +35,12 @@ public class WeatherService {
   @Transactional
   public void insertWeather( WeatherInfoDTO alarmWeatherDto) {
       
-      Optional<AddressInfo> adressInfo = addressInfoRepo.findAddressInfoByAddcd(alarmWeatherDto.getAddCd());
+      Optional<AddressInfo> adressInfo = addressInfoRepository.findAddressInfoByAddcd(alarmWeatherDto.getAddCd());
       if(adressInfo.isPresent()) {
           WeatherInfo alarmWeather = modelMapper.map(alarmWeatherDto, WeatherInfo.class);
           alarmWeather.setAddressInfo(adressInfo.get());
           alarmWeather.setCreateDt(new Date());
-          weatherInfoRepo.save(alarmWeather);          
+          weatherInfoRepository.save(alarmWeather);          
       }
       
   }
@@ -52,7 +52,7 @@ public class WeatherService {
    */
   @Transactional
   public List<WeatherInfoDTO> getWeather( String addcd) {
-    return weatherInfoRepo
+    return weatherInfoRepository
             .findAll()
                 .stream()
                 .map( e ->  modelMapper.map((WeatherInfo)e, WeatherInfoDTO.class) )
@@ -67,7 +67,7 @@ public class WeatherService {
    */
   @Transactional
   public WeatherInfoDTO getWeatherById(Long weatherId) {
-    Optional<WeatherInfo> result =  weatherInfoRepo.findById(weatherId);
+    Optional<WeatherInfo> result =  weatherInfoRepository.findById(weatherId);
     
     if(!result.isPresent()) {
         return null;
@@ -84,7 +84,7 @@ public class WeatherService {
    */
   @Transactional
   public void deleteWeather(Long weatherId) {
-      weatherInfoRepo.deleteById(weatherId);
+      weatherInfoRepository.deleteById(weatherId);
   }
   
   
@@ -95,7 +95,7 @@ public class WeatherService {
    *
    */
   public WeatherInfoDTO getCurrentWeatherInfo(String addCd) {
-      return weatherInfoRepo.getCurrentWeatherInfo(addCd);
+      return weatherInfoRepository.getCurrentWeatherInfo(addCd);
   }
   
   /**
@@ -106,7 +106,7 @@ public class WeatherService {
    *
    */
   public List<WeatherInfoDTO> getWeatherInfoList(String addCd){
-      return weatherInfoRepo.getWeatherInfoList(addCd);
+      return weatherInfoRepository.getWeatherInfoList(addCd);
   }
   
 }

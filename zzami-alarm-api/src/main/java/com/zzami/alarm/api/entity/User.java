@@ -1,22 +1,36 @@
 package com.zzami.alarm.api.entity;
 
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.Getter;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @Entity
 @NoArgsConstructor
 public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+  private long usn;
+  
+  @Column(name = "username", length = 36, nullable = false)
   private String username;
-  private String password;
+  
+  @Column(name = "encryted_password", length = 128, nullable = false)
+  private String encrytedPassword;
+
+  @Column(name = "enabled", length = 1, nullable = false)
+  private boolean enabled;
+  
+  @Column(name="password_update_dt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date passwordUpdateDt; 
+
 }

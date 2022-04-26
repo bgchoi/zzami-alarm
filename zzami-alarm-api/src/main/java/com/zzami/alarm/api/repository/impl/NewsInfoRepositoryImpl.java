@@ -18,8 +18,7 @@ import com.zzami.alarm.api.repository.NewsInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NewsInfoRepositoryImpl extends BaseRepositoryImpl<NewsInfo, Long>
-        implements NewsInfoRepository {
+public class NewsInfoRepositoryImpl extends BaseRepositoryImpl<NewsInfo, Long> implements NewsInfoRepository {
 
     public NewsInfoRepositoryImpl(EntityManager em) {
         super(NewsInfo.class, em);

@@ -2,6 +2,8 @@ server:
   port: 8081
   
 spring:
+  profiles:
+    active: local
   h2:
     console:
       enabled: true
@@ -36,5 +38,17 @@ logging:
     '[org.springframework.orm]': DEBUG
     '[org.springframework.transaction]': TRACE
     '[org.hibernate.sql]': DEBUG
-    '[org.hibernate.type]': TRACE  
+    '[org.hibernate.type]': TRACE
+    
+zzami:
+  jwt:
+    token:
+      secret-key: chldydtjr
+      expire-second: 31_536_000_000 # 1year
+      refresh-second: 7_776_000_000 # 3month
+      
+--- 
+
+spring:
+  profiles: local 
  

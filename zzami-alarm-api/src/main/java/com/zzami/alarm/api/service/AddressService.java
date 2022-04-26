@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.AddressInfoDTO;
 import com.zzami.alarm.api.entity.AddressInfo;
-import com.zzami.alarm.api.repository.impl.AddressInfoRepositoryImpl;
+import com.zzami.alarm.api.repository.AddressInfoRepository;
 
 
 @Service
@@ -16,7 +16,7 @@ import com.zzami.alarm.api.repository.impl.AddressInfoRepositoryImpl;
 public class AddressService {
 
   @Autowired
-  AddressInfoRepositoryImpl addressInfoRepo;
+  AddressInfoRepository addressInfoRepository;
   
   @Autowired
   ModelMapper modelMapper;
@@ -29,7 +29,7 @@ public class AddressService {
    *
    */
   public AddressInfoDTO getAddressInfoById(long id) {
-      Optional<AddressInfo> ret =  addressInfoRepo.findById(id);
+      Optional<AddressInfo> ret =  addressInfoRepository.findById(id);
       
       if(!ret.isPresent())
           return null;
@@ -43,7 +43,7 @@ public class AddressService {
    * @description : 주소 코드로 주소정보 조회 
    */
   public AddressInfoDTO findAddressInfoByAddcd(String addcd) {
-      Optional<AddressInfo> ret = addressInfoRepo.findAddressInfoByAddcd(addcd);
+      Optional<AddressInfo> ret = addressInfoRepository.findAddressInfoByAddcd(addcd);
       
       if(!ret.isPresent())
           return null;
@@ -54,7 +54,7 @@ public class AddressService {
   
   
   public List<AddressInfo> getAddressInfo() {
-         return addressInfoRepo.getAddressInfo();
+         return addressInfoRepository.getAddressInfo();
   }
   
   /**
@@ -65,7 +65,7 @@ public class AddressService {
   public AddressInfo saveAddress(AddressInfoDTO addrDto) {
       AddressInfo addr = modelMapper.map(addrDto, AddressInfo.class);
       addr.setIsUse(1);
-      return addressInfoRepo.save( addr );
+      return addressInfoRepository.save( addr );
   }
   
   /**
@@ -74,7 +74,7 @@ public class AddressService {
    * @description : 주소 삭제 
    */
   public void removeAddress(Long addId) {
-      addressInfoRepo.deleteById(addId);
+      addressInfoRepository.deleteById(addId);
   }
   
   
