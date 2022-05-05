@@ -13,12 +13,13 @@ import com.zzami.alarm.api.entity.QSysCode;
 import com.zzami.alarm.api.entity.QWeatherInfo;
 import com.zzami.alarm.api.repository.BaseRepository;
 
-public abstract class BaseRepositoryImpl<T,ID> extends SimpleJpaRepository<T, ID>  implements BaseRepository<T, ID>{
+public abstract class BaseRepositoryImpl<T,ID> extends SimpleJpaRepository<T, ID>  
+implements BaseRepository<T, ID>{
 
   EntityManager em;
   JPAQueryFactory jpaQueryFactory;
   
-  protected final  QAddressInfo addressInfo = QAddressInfo.addressInfo;
+  protected final QAddressInfo addressInfo = QAddressInfo.addressInfo;
   protected final QWeatherInfo weatherInfo = QWeatherInfo.weatherInfo;
   protected final QDustInfo dustInfo = QDustInfo.dustInfo;
   protected final QNewsSourceInfo newsSourceInfo = QNewsSourceInfo.newsSourceInfo;

@@ -4,9 +4,11 @@ import javax.persistence.EntityManager;
 import com.querydsl.core.types.Projections;
 import com.zzami.alarm.api.dto.DustInfoDTO;
 import com.zzami.alarm.api.entity.User;
-import com.zzami.alarm.api.repository.UserCustom;
+import com.zzami.alarm.api.repository.UserRepositoryCustom;
 
-public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long> implements UserCustom {
+
+public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long>
+        implements UserRepositoryCustom{
 
     public UserRepositoryImpl(EntityManager em) {
         super(User.class, em);
@@ -34,6 +36,8 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long> implement
 
 
     }
+
+    
 
 
 

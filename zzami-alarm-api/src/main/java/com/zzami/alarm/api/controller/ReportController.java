@@ -13,6 +13,7 @@ import com.zzami.alarm.api.dto.DustInfoDTO;
 import com.zzami.alarm.api.dto.NewsMetaTagDTO;
 import com.zzami.alarm.api.dto.ReportDTO;
 import com.zzami.alarm.api.dto.WeatherInfoDTO;
+import com.zzami.alarm.api.repository.UserRepository;
 import com.zzami.alarm.api.service.AddressService;
 import com.zzami.alarm.api.service.DustService;
 import com.zzami.alarm.api.service.NewsService;
@@ -38,6 +39,9 @@ public class ReportController {
     
     @Autowired
     NewsService newsService;
+    
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * @author : bong
@@ -74,6 +78,12 @@ public class ReportController {
             report.setNewsList(newsList);
 
             responseBody.setResult(report);
+            
+
+            userRepository.count();
+            userRepository.findAll();
+            userRepository.findByEncrytedPassword("aa");
+            userRepository.findByUsername("hello");
 
         } catch (Exception ex) {
             throw ex;
