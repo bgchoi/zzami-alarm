@@ -36,7 +36,6 @@ public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long>
 
 
     }
-
     
 
 

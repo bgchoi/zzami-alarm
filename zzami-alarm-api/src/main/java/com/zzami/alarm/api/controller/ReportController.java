@@ -83,7 +83,7 @@ public class ReportController {
             userRepository.count();
             userRepository.findAll();
             userRepository.findByEncrytedPassword("aa");
-            userRepository.findByUsername("hello");
+            userRepository.findByUserId("test@test.com");
 
         } catch (Exception ex) {
             throw ex;

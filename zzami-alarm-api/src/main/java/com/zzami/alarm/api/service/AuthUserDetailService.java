@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.user.UserInfoDto;
 import com.zzami.alarm.api.entity.User;
 import com.zzami.alarm.api.entity.UserRole;
+import com.zzami.alarm.api.repository.RoleRepository;
 import com.zzami.alarm.api.repository.UserRepository;
 import com.zzami.alarm.api.repository.UserRoleRepository;
 import com.zzami.alarm.api.security.AuthUserDetails;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AuthUserDetailService implements UserDetailsService {
 
@@ -24,18 +27,20 @@ public class AuthUserDetailService implements UserDetailsService {
     UserRepository userRepository;
     
     @Autowired
+    RoleRepository roleRepository;
+    
+    @Autowired
     UserRoleRepository userRoleRepository;
     
     @Autowired
     ModelMapper modelMapper;
-     
-
+      
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         
-        User user = userRepository.findFirstByUsernameOrderByUsnAsc(username);
+        User user = userRepository.findByUserId(userId);
         if(user == null) {
-            throw new UsernameNotFoundException("User " + username + " was not found");
+            throw new UsernameNotFoundException("User " + userId + " was not found");
         }
         
         List<UserRole> userRoleList = userRoleRepository.getByUser(user);
@@ -46,6 +51,8 @@ public class AuthUserDetailService implements UserDetailsService {
                 grantList.add(authority);
             }
         }
+        
+        log.info("grantList =" +  grantList);
 
         
         UserInfoDto userInfoDto = new UserInfoDto();
@@ -56,16 +63,11 @@ public class AuthUserDetailService implements UserDetailsService {
         userInfoDto.setUsn(user.getUsn());
         userInfoDto.setPasswordUpdateDt(user.getPasswordUpdateDt());
         
-System.err.println("userInfoDto=" +  userInfoDto);
-        
         UserDetails userDetails = new AuthUserDetails(userInfoDto);
 
          
-        return userDetails;
-         
-        
-        
+        return userDetails; 
         
     }
-
+    
 }

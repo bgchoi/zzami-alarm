@@ -24,7 +24,7 @@ public class UserRepositoryTest {
         userRepository.count();
         userRepository.findAll();
         userRepository.findByEncrytedPassword("aa");
-        userRepository.findByUsername("hello");
+        userRepository.findByUserId("bong@bong.com");
         userRepository.getOne("C0000");
     }
     

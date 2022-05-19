@@ -20,6 +20,9 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long usn;
   
+  @Column(name = "user_id", length = 36, nullable = false)
+  private String userId;
+  
   @Column(name = "username", length = 36, nullable = false)
   private String username;
   
@@ -32,5 +35,13 @@ public class User {
   @Column(name="password_update_dt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
   @Temporal(TemporalType.TIMESTAMP)
   private Date passwordUpdateDt; 
+  
+  @Column(name="create_dt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date createDt;
+  
+  @Column(name="update_dt")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date updateDt;
 
 }

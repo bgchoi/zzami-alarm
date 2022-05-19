@@ -11,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import com.zzami.alarm.api.dto.user.UserInfoDto;
 import com.zzami.alarm.api.service.AuthUserDetailService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,11 +28,11 @@ public class UserAuthenticatioProvider implements AuthenticationProvider{
     public Authentication authenticate(Authentication authentication) 
             throws AuthenticationException {
         
-        String username = (String) authentication.getName();
+        String userId = (String) authentication.getName();
         String password = (String) authentication.getCredentials();
         
         Collection<? extends GrantedAuthority> authorities;
-        UserDetails userDetail = userService.loadUserByUsername(username);
+        UserDetails userDetail = userService.loadUserByUsername(userId);
         
         if(userDetail == null) {
             throw new BadCredentialsException("User Not Found");
@@ -44,8 +43,9 @@ public class UserAuthenticatioProvider implements AuthenticationProvider{
         }
         
         authorities = userDetail.getAuthorities();
+        log.info("authorities ===>" +  authorities);
         
-        return new UsernamePasswordAuthenticationToken(username, password, authorities);
+        return new UsernamePasswordAuthenticationToken(userId, password, authorities);
     }
 
     @Override
