@@ -14,10 +14,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "user_role", //
+@Table(name = "sys_user_role", //
         uniqueConstraints = { //
                 @UniqueConstraint(name = "user_role_uk", columnNames = { "usn", "role_id" }) })
-public class UserRole {
+public class SysUserRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,11 +26,11 @@ public class UserRole {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usn", nullable = false)
-    private User user;
+    private SysUser sysUser;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    private SysRole sysRole;
     
 }
 

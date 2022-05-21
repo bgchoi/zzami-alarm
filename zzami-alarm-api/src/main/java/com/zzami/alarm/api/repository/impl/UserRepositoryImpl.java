@@ -3,15 +3,15 @@ package com.zzami.alarm.api.repository.impl;
 import javax.persistence.EntityManager;
 import com.querydsl.core.types.Projections;
 import com.zzami.alarm.api.dto.DustInfoDTO;
-import com.zzami.alarm.api.entity.User;
+import com.zzami.alarm.api.entity.SysUser;
 import com.zzami.alarm.api.repository.UserRepositoryCustom;
 
 
-public class UserRepositoryImpl extends BaseRepositoryImpl<User, Long>
+public class UserRepositoryImpl extends BaseRepositoryImpl<SysUser, Long>
         implements UserRepositoryCustom{
 
     public UserRepositoryImpl(EntityManager em) {
-        super(User.class, em);
+        super(SysUser.class, em);
     }
 
     @Override

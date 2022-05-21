@@ -1,8 +1,8 @@
 package com.zzami.alarm.api.repository;
 
-import com.zzami.alarm.api.entity.Role;
+import com.zzami.alarm.api.entity.SysRole;
 
-public interface RoleRepository extends BaseRepository<Role, Long> {
+public interface RoleRepository extends BaseRepository<SysRole, Long> {
   
-    Role findByRoleName(String roleName);
+    SysRole findByRoleName(String roleName);
 }

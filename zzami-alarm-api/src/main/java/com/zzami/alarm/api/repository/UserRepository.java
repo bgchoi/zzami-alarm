@@ -1,14 +1,14 @@
 package com.zzami.alarm.api.repository;
 
-import com.zzami.alarm.api.entity.User;
+import com.zzami.alarm.api.entity.SysUser;
 
-public interface UserRepository extends BaseRepository<User, Long>, UserRepositoryCustom {
+public interface UserRepository extends BaseRepository<SysUser, Long>, UserRepositoryCustom {
  
-    User findByUserId(String userId);
+    SysUser findByUserId(String userId);
     
-    User findFirstByUsernameOrderByUsnAsc(String username);
+    SysUser findFirstByUsernameOrderByUsnAsc(String username);
     
-    User findByEncrytedPassword(String enString);
+    SysUser findByEncrytedPassword(String enString);
  
      
 }

@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "role",
+@Table(name = "sys_role",
         uniqueConstraints = {@UniqueConstraint(name = "role_uk", columnNames = "role_name")})
-public class Role {
+public class SysRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

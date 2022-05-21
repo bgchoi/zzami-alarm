@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.zzami.alarm.api.dto.user.UserInfoDto;
-import com.zzami.alarm.api.entity.User;
+import com.zzami.alarm.api.entity.SysUser;
 import com.zzami.alarm.api.security.JwtTokenProvider;
 import com.zzami.alarm.api.service.UserService;
 import com.zzami.alarm.core.dto.result.ApiResponseBody;
@@ -65,7 +65,7 @@ public class AuthController {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userId, password));
             log.info("인증 결과: " + authenticate.getPrincipal());
             
-            User user = userService.getUser(authenticate.getName());
+            SysUser user = userService.getUser(authenticate.getName());
             
             UserInfoDto userInfoDto = new UserInfoDto();
             userInfoDto.setUsn(user.getUsn());

@@ -1,14 +1,15 @@
 package com.zzami.alarm.api.service;
 
+import java.util.Date;
 import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.user.UserInfoDto;
-import com.zzami.alarm.api.entity.Role;
-import com.zzami.alarm.api.entity.User;
-import com.zzami.alarm.api.entity.UserRole;
+import com.zzami.alarm.api.entity.SysRole;
+import com.zzami.alarm.api.entity.SysUser;
+import com.zzami.alarm.api.entity.SysUserRole;
 import com.zzami.alarm.api.repository.RoleRepository;
 import com.zzami.alarm.api.repository.UserRepository;
 import com.zzami.alarm.api.repository.UserRoleRepository;
@@ -34,24 +35,26 @@ public class UserService {
     @Transactional
     public void saveUser(UserInfoDto userInfo) {
         
-        User user = new User();
+        SysUser user = new SysUser();
         user.setUserId(userInfo.getUserId());
         user.setEncrytedPassword(passwordEncoder.encode(userInfo.getPasswd()));
         user.setUsername(userInfo.getUserNm());
+        user.setCreateDt(new Date());
+        user.setEnabled(true);
         
         userRepository.save(user);
         
-        Role role = roleRepository.findByRoleName("USER");
+        SysRole role = roleRepository.findByRoleName("USER");
         
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(role);
+        SysUserRole userRole = new SysUserRole();
+        userRole.setSysUser(user);
+        userRole.setSysRole(role);
         
         userRoleRepository.save(userRole);
     }
     
     @Transactional
-    public User getUser(String userId) {
+    public SysUser getUser(String userId) {
         return userRepository.findByUserId(userId);
     }
 

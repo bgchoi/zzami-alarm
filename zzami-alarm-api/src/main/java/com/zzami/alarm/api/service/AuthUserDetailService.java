@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.zzami.alarm.api.dto.user.UserInfoDto;
-import com.zzami.alarm.api.entity.User;
-import com.zzami.alarm.api.entity.UserRole;
+import com.zzami.alarm.api.entity.SysUser;
+import com.zzami.alarm.api.entity.SysUserRole;
 import com.zzami.alarm.api.repository.RoleRepository;
 import com.zzami.alarm.api.repository.UserRepository;
 import com.zzami.alarm.api.repository.UserRoleRepository;
@@ -38,16 +38,16 @@ public class AuthUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         
-        User user = userRepository.findByUserId(userId);
+        SysUser user = userRepository.findByUserId(userId);
         if(user == null) {
             throw new UsernameNotFoundException("User " + userId + " was not found");
         }
         
-        List<UserRole> userRoleList = userRoleRepository.getByUser(user);
+        List<SysUserRole> userRoleList = userRoleRepository.getBySysUser(user);
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if(userRoleList != null) {
-            for (UserRole role : userRoleList) { 
-                GrantedAuthority authority = new SimpleGrantedAuthority(role.getRole().getRoleName());
+            for (SysUserRole role : userRoleList) { 
+                GrantedAuthority authority = new SimpleGrantedAuthority(role.getSysRole().getRoleName());
                 grantList.add(authority);
             }
         }
