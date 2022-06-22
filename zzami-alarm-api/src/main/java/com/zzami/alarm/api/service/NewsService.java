@@ -90,6 +90,7 @@ public class NewsService {
       
       NewsInfo news = newsInfoRepository.getById(newsId);
       NewsInfoDTO newsInfo = null;
+      log.info("news==>" + news);
       if(news != null) {
          newsInfo  = modelMapper.map(news, NewsInfoDTO.class);          
       }

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -28,6 +30,7 @@ public class NewsInfo {
     @ToString.Exclude
     @JoinColumn(name="news_source_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = NewsSourceInfo.class)
+    @NotFound(action = NotFoundAction.IGNORE)
     private NewsSourceInfo newsSourceInfo;
     
     @Column(name="title", nullable = false, columnDefinition = "text")

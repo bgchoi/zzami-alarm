@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.zzami.alarm.api.dto.user.LoginInfoDto;
 import com.zzami.alarm.api.dto.user.UserInfoDto;
-import com.zzami.alarm.api.entity.SysUser;
+import com.zzami.alarm.api.entity.user.SysUser;
 import com.zzami.alarm.api.security.JwtTokenProvider;
 import com.zzami.alarm.api.service.UserService;
 import com.zzami.alarm.core.dto.result.ApiResponseBody;
@@ -53,11 +54,11 @@ public class AuthController {
         @ApiImplicitParam(name = "password", required = true, paramType = "form", value = "패스워드"), 
     })
     @PostMapping(value="/signup", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<ApiResponseBody<Void>> signUp(
+    public ResponseEntity<ApiResponseBody<LoginInfoDto>> signUp(
             @RequestParam(value="userId", required = true) String userId,
             @RequestParam(value="password", required = true) String password) {
         
-        ApiResponseBody<Void> responseBody = new ApiResponseBody<>();
+        ApiResponseBody<LoginInfoDto> responseBody = new ApiResponseBody<>();
         responseBody.setResponse(ResultStatus.OK);
 
         try {
@@ -74,8 +75,12 @@ public class AuthController {
             userInfoDto.setPasswordUpdateDt(user.getPasswordUpdateDt());
             userInfoDto.setAuthorities(authenticate.getAuthorities());
             
-            String token = jwtTokenProvider.createToken(userInfoDto);
-            log.info("token =" +  token);
+            String authToken = jwtTokenProvider.createToken(userInfoDto); 
+            
+            LoginInfoDto loginInfo = new LoginInfoDto();
+            loginInfo.setAuthToken(authToken);
+            
+            responseBody.setResult(loginInfo);
             
         } catch (Exception ex) {
             log.error(ex.getMessage(), ex);

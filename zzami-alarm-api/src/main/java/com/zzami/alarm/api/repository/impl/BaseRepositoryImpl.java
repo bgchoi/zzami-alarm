@@ -9,8 +9,8 @@ import com.zzami.alarm.api.entity.QMetaCode;
 import com.zzami.alarm.api.entity.QNewsInfo;
 import com.zzami.alarm.api.entity.QNewsSourceInfo;
 import com.zzami.alarm.api.entity.QNewsSourceMetaMap;
-import com.zzami.alarm.api.entity.QSysCode;
 import com.zzami.alarm.api.entity.QWeatherInfo;
+import com.zzami.alarm.api.entity.user.QSysCode;
 import com.zzami.alarm.api.repository.BaseRepository;
 
 public abstract class BaseRepositoryImpl<T,ID> extends SimpleJpaRepository<T, ID>  

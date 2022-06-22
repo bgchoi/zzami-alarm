@@ -40,14 +40,16 @@ public class WeatherInfoRepositoryImpl extends BaseRepositoryImpl<WeatherInfo, L
   
   @Override
   public List<WeatherInfoDTO> getWeatherInfoList(String addCd) {
-      return jpaQueryFactory 
-                 .from(addressInfo)
-                 .innerJoin(addressInfo.weatherInfoList, weatherInfo)
-                 .where(addressInfo.addCd.eq(addCd))
-                 .groupBy(addressInfo.addCd)
-                 .select(Projections.constructor(WeatherInfoDTO.class, 
-                         addressInfo.addCd,   
-                         weatherInfo.templature.max())).fetch();
+      
+      return null;
+//      return jpaQueryFactory 
+//                 .from(addressInfo)
+//                 .innerJoin(addressInfo.weatherInfoList, weatherInfo)
+//                 .where(addressInfo.addCd.eq(addCd))
+//                 .groupBy(addressInfo.addCd)
+//                 .select(Projections.constructor(WeatherInfoDTO.class, 
+//                         addressInfo.addCd,   
+//                         weatherInfo.templature.max())).fetch();
       
   
                  

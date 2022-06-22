@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -24,12 +26,14 @@ public class NewsSourceMetaMap {
     @ManyToOne
     @JoinColumn(name="meta_cd")
     @ToString.Exclude
+    @NotFound(action = NotFoundAction.IGNORE)
     private MetaCode meta;
     
     @MapsId("newsSourceId")
     @ManyToOne
     @JoinColumn(name="news_source_id")
     @ToString.Exclude
+    @NotFound(action = NotFoundAction.IGNORE)
     private NewsSourceInfo newsSourceInfo; 
     
     @Embeddable

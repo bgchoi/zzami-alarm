@@ -77,8 +77,8 @@ public class SwaggerConfig {
               .build()//
               .apiInfo(metadata())//
               .useDefaultResponseMessages(false)//
-              //.securitySchemes(Lists.newArrayList(apiKey()))
-              //.securityContexts(Lists.newArrayList(securityContext())) //
+              .securitySchemes(Lists.newArrayList(apiKey()))
+              .securityContexts(Lists.newArrayList(securityContext())) //
               .genericModelSubstitutes(Optional.class);
     }
 

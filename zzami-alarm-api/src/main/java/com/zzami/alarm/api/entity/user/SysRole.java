@@ -1,4 +1,4 @@
-package com.zzami.alarm.api.entity;
+package com.zzami.alarm.api.entity.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

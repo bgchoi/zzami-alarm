@@ -3,7 +3,7 @@ package com.zzami.alarm.api.repository.impl;
 import javax.persistence.EntityManager;
 import com.querydsl.core.types.Projections;
 import com.zzami.alarm.api.dto.DustInfoDTO;
-import com.zzami.alarm.api.entity.SysUser;
+import com.zzami.alarm.api.entity.user.SysUser;
 import com.zzami.alarm.api.repository.UserRepositoryCustom;
 
 
