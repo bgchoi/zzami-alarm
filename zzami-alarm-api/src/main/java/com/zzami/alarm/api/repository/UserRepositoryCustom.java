@@ -1,7 +1,5 @@
 package com.zzami.alarm.api.repository;
 
-import com.zzami.alarm.api.dto.DustInfoDTO;
-
 /**
 * @packageName : com.zzami.alarm.api.repository 
 * @fileName : UserRepositoryCustom.java 
@@ -13,5 +11,5 @@ import com.zzami.alarm.api.dto.DustInfoDTO;
 */
 public interface UserRepositoryCustom  {
  
-    DustInfoDTO getOne(String username);
+    Object getOne(String username);
 }

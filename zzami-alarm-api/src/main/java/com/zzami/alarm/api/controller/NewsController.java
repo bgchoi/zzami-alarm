@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping("/api/o")
+@RequestMapping("/api/p")
 @Api(tags = "40.뉴스관리")
 public class NewsController {
 
@@ -35,7 +35,7 @@ public class NewsController {
      * @description : 뉴스 소스 등록  
      *
      */
-    @ApiOperation(value = "뉴스 소스 등록[어드민]") 
+    @ApiOperation(value = "뉴스 소스 등록") 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "newsSourceId", required = false,  paramType = "form", value = "뉴스아이디"),
         @ApiImplicitParam(name = "newsSourceNm", required = true,  paramType = "form", value = "뉴스이름"),

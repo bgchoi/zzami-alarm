@@ -9,16 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString 
-public class ReportDTO {
-
-    @ApiModelProperty(value = "주소정보")
-    private AddressInfoDTO address;
-
-    @ApiModelProperty(value = "날씨정보")
-    private WeatherInfoDTO weather;
-
-    @ApiModelProperty(value = "미세먼지정보")
-    private DustInfoDTO dust;
+public class ReportDTO { 
 
     @ApiModelProperty(value = "뉴스리스트")
     List<NewsMetaTagDTO> newsList;

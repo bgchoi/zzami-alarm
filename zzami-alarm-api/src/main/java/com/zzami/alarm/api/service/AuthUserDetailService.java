@@ -47,7 +47,7 @@ public class AuthUserDetailService implements UserDetailsService {
         List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
         if(userRoleList != null) {
             for (SysUserRole role : userRoleList) { 
-                GrantedAuthority authority = new SimpleGrantedAuthority(role.getSysRole().getRoleName());
+                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+ role.getSysRole().getRoleName());
                 grantList.add(authority);
             }
         }

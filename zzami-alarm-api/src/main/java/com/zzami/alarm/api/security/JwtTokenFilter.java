@@ -2,6 +2,8 @@ package com.zzami.alarm.api.security;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -40,15 +43,27 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         // 토큰을 파싱해서 인증정보를 생성하고 SecurityContextHolder에 추가한다.
         
         String token = jwtTokenProvider.resolveToken(request);
+        log.info("token=" +  token);
         try {
             if(token != null && jwtTokenProvider.validateToken(token)) {
+                log.info("token validate ..");
                 Claims claims = jwtTokenProvider.getClaimsFromToken(token);
                 String userId = claims.getSubject();
                 int usn = claims.get("usn", Integer.class);
                 String userNm = claims.get("userNm", String.class);
                 String tokenProfiles = claims.get("profiles", String.class);
                 Date passwdUpdateDt = claims.get("passwdUpdateDt", Date.class);
-                List<GrantedAuthority> authorities = claims.get("roles", List.class);
+                List<HashMap<String, String>> roles = claims.get("role", List.class);
+                
+                List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                if(roles != null) {
+                    for (HashMap<String, String> role : roles) { 
+                        GrantedAuthority authority = new SimpleGrantedAuthority(role.get("authority"));
+                        authorities.add(authority);
+                    }
+                }
+                
+                log.info("authorities=" +  authorities);
                 
                 if(!profiles.equals(tokenProfiles)) {
                     throw new ZmAuthEntryPointException("profile이 일치하지 않습니다. \n다시 로그인 바랍니다.");
@@ -72,6 +87,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 request.setAttribute("roles", null);
             }
         }catch(ZmAuthEntryPointException ex) {
+            log.error(ex.getMessage(), ex);
             SecurityContextHolder.clearContext(); 
             ObjectMapper om = new ObjectMapper();
             // @formatter:off
